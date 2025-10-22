@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && node -e \"const fs=require('fs');const path=require('path');if(fs.existsSync('dist/index.html')){fs.copyFileSync('dist/index.html','index.html');console.log('Copied index.html to root');}if(fs.existsSync('dist/assets')){if(!fs.existsSync('assets'))fs.mkdirSync('assets');const assets=fs.readdirSync('dist/assets');assets.forEach(f=>fs.copyFileSync(path.join('dist/assets',f),path.join('assets',f)));console.log('Copied assets to root');}\"",
     "preview": "vite preview",
-    "start": "serve -s dist -l 8080"
+    "start": "serve -s . -l 8080",
+    "postbuild": "cp web.config dist/web.config 2>/dev/null || copy web.config dist\\web.config 2>nul || echo 'web.config copy skipped'",
   },
   "dependencies": {
     "react": "^18.2.0",

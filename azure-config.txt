@@ -1,0 +1,11 @@
+# Azure App Service - Static File Configuration
+# This ensures only built files are served
+
+# Copy this file to your Azure App Service Configuration
+# Go to Azure Portal -> Your App Service -> Configuration -> Application Settings
+
+# Add these settings:
+# WEBSITE_RUN_FROM_PACKAGE = 1
+# WEBSITE_NODE_DEFAULT_VERSION = 18.17.0
+# SCM_DO_BUILD_DURING_DEPLOYMENT = true
+# STARTUP_COMMAND = npm start
