@@ -32,10 +32,16 @@ IF !ERRORLEVEL! NEQ 0 goto error
 
 :: 3. Copy built files to deployment target
 echo Copying built files...
-xcopy "%DEPLOYMENT_SOURCE%\dist\*" "%DEPLOYMENT_TARGET%\" /E /Y
+if not exist "%DEPLOYMENT_TARGET%" mkdir "%DEPLOYMENT_TARGET%"
+xcopy "%DEPLOYMENT_SOURCE%\dist\*" "%DEPLOYMENT_TARGET%\" /E /Y /I
 IF !ERRORLEVEL! NEQ 0 goto error
 
-:: 4. Copy web.config to root
+:: 4. Remove source files to prevent serving them
+echo Cleaning up source files...
+if exist "%DEPLOYMENT_TARGET%\src" rmdir /s /q "%DEPLOYMENT_TARGET%\src"
+if exist "%DEPLOYMENT_TARGET%\node_modules" rmdir /s /q "%DEPLOYMENT_TARGET%\node_modules"
+
+:: 5. Copy web.config to root
 IF EXIST "%DEPLOYMENT_SOURCE%\web.config" (
   copy "%DEPLOYMENT_SOURCE%\web.config" "%DEPLOYMENT_TARGET%\web.config"
 )

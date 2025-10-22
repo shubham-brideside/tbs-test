@@ -8,6 +8,10 @@ yarn-error.log*
 dist/
 build/
 
+# Azure deployment - exclude source files
+src/
+node_modules/
+
 # Environment variables
 .env
 .env.local
